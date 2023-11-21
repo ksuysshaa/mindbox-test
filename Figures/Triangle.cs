@@ -16,11 +16,17 @@ public class Triangle: Figure
         _firstSide = firstSide;
         _secondSide = secondSide;
         _thirdSide = thirdSide;
+        
+        var maxSide = Math.Max(firstSide, Math.Max(secondSide, thirdSide));
+        var perimeter = firstSide + secondSide + thirdSide;
+        
+        if ((perimeter - maxSide) - maxSide < 0)
+            throw new ArgumentException("The greatest side of the triangle must be greater than sum of others.");
     }
 
-    private bool IsRightAngled(out List<double> sides)
+    private bool IsRightAngled()
     {
-        sides = new List<double>{_firstSide, _secondSide, _thirdSide};
+        var sides = new List<double>{_firstSide, _secondSide, _thirdSide};
         sides.Sort();
 
         return Math.Pow(sides[0], 2) + Math.Pow(sides[1], 2) == Math.Pow(sides[2], 2);
@@ -28,15 +34,10 @@ public class Triangle: Figure
 
     public override double CalculateArea()
     {
-        double area;
         var halfPerimetr = (_firstSide + _secondSide + _thirdSide) / 2;
-
-        if (IsRightAngled(out var sides))
-            area = sides[0] * sides[1] / 2;
-        else
-            area = Math.Sqrt(halfPerimetr * (halfPerimetr - _firstSide)
-                                          * (halfPerimetr - _secondSide)
-                                          * (halfPerimetr - _thirdSide));
+        var area = Math.Sqrt(halfPerimetr * (halfPerimetr - _firstSide)
+                                      * (halfPerimetr - _secondSide)
+                                      * (halfPerimetr - _thirdSide));
         
         return area;
     }
