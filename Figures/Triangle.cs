@@ -26,10 +26,11 @@ public class Triangle: Figure
 
     private bool IsRightAngled()
     {
-        var sides = new List<double>{_firstSide, _secondSide, _thirdSide};
-        sides.Sort();
+        var maxSide = Math.Max(_firstSide, Math.Max(_secondSide, _thirdSide));
+        var minSide = Math.Min(_firstSide, Math.Min(_secondSide, _thirdSide));
+        var perimeter = _firstSide + _secondSide + _thirdSide;
 
-        return Math.Pow(sides[0], 2) + Math.Pow(sides[1], 2) == Math.Pow(sides[2], 2);
+        return Math.Pow((perimeter - maxSide - minSide), 2) + Math.Pow(minSide, 2) == Math.Pow(maxSide, 2);
     }
 
     public override double CalculateArea()
